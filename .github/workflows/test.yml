@@ -51,3 +51,29 @@ jobs:
         with:
           name: coverage-xml
           path: coverage.xml
+  codecov:
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
+          merge-multiple: true
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: litestar-org/litestar-asyncpg
