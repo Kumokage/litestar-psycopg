@@ -29,14 +29,14 @@ async def test_lifespan(postgres_service: PostgresService) -> None:
         yield
         print(2)  # noqa: T201
 
-    asyncpg_config = PsycopgConfig(
+    psycopg_config = PsycopgConfig(
         pool_config=AsyncConnectionPoolConfig(
             conninfo=f"postgresql://{postgres_service.user}:{postgres_service.password}@{postgres_service.host}:{postgres_service.port}/{postgres_service.database}"
         )
     )
-    asyncpg = PsycopgPlugin(config=asyncpg_config)
+    psycopg = PsycopgPlugin(config=psycopg_config)
     with create_test_client(
-        route_handlers=[health_check], plugins=[asyncpg], lifespan=[partial(lifespan)]
+        route_handlers=[health_check], plugins=[psycopg], lifespan=[partial(lifespan)]
     ) as client:
         response = client.get("/")
         assert response.status_code == 200

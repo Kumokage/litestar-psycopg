@@ -44,7 +44,7 @@ jobs:
 
       - name: Test with coverage
         if: ${{ matrix.python-version == '3.13' }}
-        run: uv run pytest tests --dist "loadgroup" -m "" --cov=litestar_asyncpg --cov-report=xml -n 2
+        run: uv run pytest tests --dist "loadgroup" -m "" --cov=litestar_psycopg --cov-report=xml -n 2
 
       - uses: actions/upload-artifact@v4
         if: ${{ matrix.python-version == '3.13' }}
