@@ -22,7 +22,7 @@ classifiers = [
 name = "litestar-psycopg"
 keywords = ["litestar", "psycopg"]
 license = { text = "Apache-2.0" }
-version = "0.1.0"
+version = "0.1.1"
 description = "Psycopg plugin for Litestar"
 readme = "README.md"
 requires-python = ">=3.9"
