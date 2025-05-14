@@ -6,7 +6,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -22,17 +21,114 @@ classifiers = [
 ]
 name = "litestar-psycopg"
 keywords = ["litestar", "psycopg"]
-license = { text = "MIT" }
+license = { text = "Apache-2.0" }
 version = "0.1.0"
 description = "Psycopg plugin for Litestar"
 readme = "README.md"
-requires-python = ">=3.8"
-dependencies = [
-    "litestar>=2.16.0",
-    "psycopg[binary,pool]>=3.2.7",
-]
+requires-python = ">=3.9"
+dependencies = ["litestar>=2.16.0", "psycopg[binary,pool]>=3.2.7"]
+
+[project.urls]
+Issue = "https://github.com/kumokage/litestar-psycopg/issues/"
+Source = "https://github.com/kumokage/litestar-psycopg"
 
 [dependency-groups]
-dev = [
-    "ruff>=0.11.9",
+dev = ["ruff>=0.11.9"]
+
+[tool.ruff]
+exclude = [".venv"]
+line-length = 120
+src = ["litestar_psycopg", "tests"]
+target-version = "py39"
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 60
+
+[tool.ruff.lint]
+extend-safe-fixes = ["TC"]
+fixable = ["ALL"]
+ignore = [
+    "A003",    # flake8-builtins - class attribute {name} is shadowing a python builtin
+    "B010",    # flake8-bugbear - do not call setattr with a constant attribute value
+    "D100",    # pydocstyle - missing docstring in public module
+    "D101",    # pydocstyle - missing docstring in public class
+    "D102",    # pydocstyle - missing docstring in public method
+    "D103",    # pydocstyle - missing docstring in public function
+    "D104",    # pydocstyle - missing docstring in public package
+    "D105",    # pydocstyle - missing docstring in magic method
+    "D106",    # pydocstyle - missing docstring in public nested class
+    "D107",    # pydocstyle - missing docstring in __init__
+    "D202",    # pydocstyle - no blank lines allowed after function docstring
+    "D205",    # pydocstyle - 1 blank line required between summary line and description
+    "D415",    # pydocstyle - first line should end with a period, question mark, or exclamation point
+    "E501",    # pycodestyle line too long, handled by ruff format
+    "PLW2901", # pylint - for loop variable overwritten by assignment target
+    "RUF012",  # Ruff-specific rule - annotated with classvar
+    "ISC001",  # Ruff formatter incompatible
+    "A005",    # flake8 - Module `x` shadows a Python standard-library module
+    "PLC0415", # pylint - `import` should be at the top of the file
+    "FA100",   # Add `from __future__ import annotations` to simplify
+    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed
+    "FBT001",  # Boolean-typed positional argument in function definition
+    "FBT002",  # Boolean default positional argument in function definition
+    "PLR0913", # pylint - Too many arguments in function definition
+    "ARG002",  # Unused method argument
+    "ARG001",  # Unused function argument
+    "CPY001",  # pycodestyle - Missing Copywrite notice at the top of the file
+    "RUF029",  # Ruff - function is declared as async but has no awaitable calls
+    "COM812",  # flake8-comma - Missing trailing comma
+    "PGH003",  # Use Specific ignore for pyright
+    "UP007",
+    "UP035",
+    "UP006",
+
 ]
+select = ["ALL"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
+
+[tool.ruff.lint.pep8-naming]
+classmethod-decorators = ["classmethod"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["litestar_psycopg", "tests"]
+
+[tool.ruff.lint.per-file-ignores]
+"docs/**/*.*" = ["S", "B", "DTZ", "A", "TC", "ERA", "D", "RET", "PLW0127"]
+"docs/examples/**" = ["T201"]
+"tests/**/*.*" = [
+    "A",
+    "ARG",
+    "B",
+    "BLE",
+    "C901",
+    "D",
+    "DTZ",
+    "EM",
+    "FBT",
+    "G",
+    "N",
+    "PGH",
+    "PIE",
+    "PLR",
+    "PLW",
+    "PTH",
+    "RSE",
+    "S",
+    "S101",
+    "SIM",
+    "TC",
+    "TRY",
+    "PT012",
+    "INP001",
+    "DOC",
+    "PLC",
+]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"

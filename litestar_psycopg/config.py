@@ -4,8 +4,7 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Dict, Optional, Type, TypeVar, Union, cast
-from psycopg import AsyncConnection
-from psycopg_pool import AsyncConnectionPool
+
 from litestar.constants import (
     HTTP_DISCONNECT,
     HTTP_RESPONSE_START,
@@ -14,8 +13,10 @@ from litestar.constants import (
 )
 from litestar.exceptions import ImproperlyConfiguredException
 from litestar.serialization import decode_json, encode_json
+from litestar.types import Empty
 from litestar.utils.dataclass import simple_asdict
-from psycopg_pool.abc import ACT, AsyncConnectFailedCB, AsyncConnectionCB
+from psycopg import AsyncConnection
+from psycopg_pool import AsyncConnectionPool
 
 from litestar_psycopg._utils import delete_scope_state, get_scope_state, set_scope_state
 
@@ -26,6 +27,7 @@ if TYPE_CHECKING:
     from litestar import Litestar
     from litestar.datastructures.state import State
     from litestar.types import BeforeMessageSendHookHandler, Message, Scope
+    from psycopg_pool.abc import ACT, AsyncConnectFailedCB, AsyncConnectionCB
 
 
 CONNECTION_SCOPE_KEY = "_psycopg_db_connection"
@@ -81,7 +83,7 @@ class AsyncConnectionPoolConfig:
     kwargs: Optional[Dict[str, Any]] = None
     """A dictionary of arguments which will be passed directly to the ``AsyncConnectionPool()`` as keyword arguments.
     """
-    connection_class: Type[ACT] = cast(Type[ACT], AsyncConnection)
+    connection_class: Type[ACT] = Empty
     """The class to use for connections. Must be a subclass of AsyncConnection
     """
     min_size: int = 4
@@ -91,7 +93,7 @@ class AsyncConnectionPoolConfig:
     """The max number of connections to allow in connection pool.
     """
     open: Optional[bool] = False
-    """If True, open the pool, creating the required connections, on init. If False, open the pool when open() 
+    """If True, open the pool, creating the required connections, on init. If False, open the pool when open()
     is called or when the pool context is entered.
     """
     configure: Optional[AsyncConnectionCB[ACT]] = None
@@ -171,9 +173,13 @@ class PsycopgConfig:
             function.
         """
         if self.pool_config:
-            return simple_asdict(
+            ret = simple_asdict(
                 self.pool_config, exclude_empty=True, convert_nested=False
             )
+            connect_kwargs = ret.pop("connect_kwargs", None)
+            if connect_kwargs is not None:
+                ret.update(connect_kwargs)
+            return ret
         msg = (
             "'pool_config' methods can not be used when a 'pool_instance' is provided."
         )

@@ -6,7 +6,7 @@ import msgspec
 from litestar import Controller, Litestar, get
 from litestar.exceptions import InternalServerException
 
-from litestar_psycopg import PsycopgConfig, PsycopgPlugin, AsyncConnectionPoolConfig
+from litestar_psycopg import AsyncConnectionPoolConfig, PsycopgConfig, PsycopgPlugin
 
 if TYPE_CHECKING:
     from psycopg import AsyncConnection
