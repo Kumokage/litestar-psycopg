@@ -1,0 +1,33 @@
+[project]
+authors = [{ name = "Alex Glushko", email = "alextvrus@gmail.com" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+    "Typing :: Typed",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Topic :: Database",
+    "Topic :: Database :: Database Engines/Servers",
+]
+name = "litestar-psycopg"
+keywords = ["litestar", "psycopg"]
+license = { text = "MIT" }
+version = "0.1.0"
+description = "Psycopg plugin for Litestar"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "litestar>=2.16.0",
+    "psycopg[binary,pool]>=3.2.7",
+]
