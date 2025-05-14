@@ -1,5 +1,6 @@
 # Litestar Psycopg
 
+[![PyPI - Version](https://img.shields.io/pypi/v/litestar-psycopg?labelColor=202235&color=edb641&logo=python&logoColor=edb641)](https://badge.fury.io/py/litestar-psycopg) ![PyPI - Support Python Versions](https://img.shields.io/pypi/pyversions/litestar-psycopg?labelColor=202235&color=edb641&logo=python&logoColor=edb641) ![litestar-psycopg PyPI - Downloads](https://img.shields.io/pypi/dm/litestar-psycopg?logo=python&label=package%20downloads&labelColor=202235&color=edb641&logoColor=edb641) [![linting - Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json&labelColor=202235)](https://github.com/astral-sh/ruff)
 A barebones Psycopg plugin for Litestar. This plugin is useful for when you plan to use no ORM or need to manage the postgres connection separately.
 
 ## Usage
