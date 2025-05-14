@@ -32,11 +32,11 @@ class SampleController(Controller):
         raise InternalServerException
 
 
-asyncpg = PsycopgPlugin(
+psycopg = PsycopgPlugin(
     config=PsycopgConfig(
         pool_config=AsyncConnectionPoolConfig(
             conninfo="postgresql://app:app@localhost:5432/app"
         )
     )
 )
-app = Litestar(plugins=[asyncpg], route_handlers=[SampleController])
+app = Litestar(plugins=[psycopg], route_handlers=[SampleController])

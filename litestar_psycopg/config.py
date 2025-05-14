@@ -91,6 +91,9 @@ class AsyncConnectionPoolConfig:
     """The max number of connections to allow in connection pool.
     """
     open: Optional[bool] = False
+    """If True, open the pool, creating the required connections, on init. If False, open the pool when open() 
+    is called or when the pool context is entered.
+    """
     configure: Optional[AsyncConnectionCB[ACT]] = None
     """ A callback to configure a connection after creation.
     """
