@@ -33,7 +33,52 @@ Issue = "https://github.com/kumokage/litestar-psycopg/issues/"
 Source = "https://github.com/kumokage/litestar-psycopg"
 
 [dependency-groups]
-dev = ["ruff>=0.11.9"]
+dev = [
+    "anyio>=4.9.0",
+    "coverage>=7.8.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "pytest-databases[postgres]>=0.12.3",
+    "pytest-mock>=3.14.0",
+    "pytest-sugar>=1.0.0",
+    "pytest-xdist>=3.6.1",
+    "ruff>=0.11.9",
+]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+filterwarnings = [
+    "ignore::DeprecationWarning:pkg_resources",
+    "ignore::DeprecationWarning:google.*",
+    "ignore::DeprecationWarning:passlib.*",
+    "ignore::DeprecationWarning:aiosql.*",
+    "ignore::DeprecationWarning:litestar.constants.*",
+    "ignore::DeprecationWarning:litestar.utils.*",
+]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+concurrency = ["multiprocessing"]
+omit = ["*/tests/*"]
+parallel = true
+
+[tool.coverage.report]
+exclude_lines = [
+    'pragma: no cover',
+    'if TYPE_CHECKING:',
+    'except ImportError as e:',
+    'except ImportError:',
+    '\.\.\.',
+    'raise NotImplementedError',
+    'if VERSION.startswith("1"):',
+    'if pydantic.VERSION.startswith("1"):',
+]
+omit = ["*/tests/*"]
+show_missing = true
 
 [tool.ruff]
 exclude = [".venv"]
