@@ -90,6 +90,7 @@ class AsyncConnectionPoolConfig:
     max_size: Optional[int] = None
     """The max number of connections to allow in connection pool.
     """
+    open: Optional[bool] = False
     configure: Optional[AsyncConnectionCB[ACT]] = None
     """ A callback to configure a connection after creation.
     """
